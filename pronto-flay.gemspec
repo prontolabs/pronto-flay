@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'pronto', '~> 0.0.1'
+  s.add_dependency 'flay', '~> 2.4.0'
   s.add_development_dependency 'rake', '~> 10.1.0'
   s.add_development_dependency 'rspec', '~> 2.13.0'
 end
