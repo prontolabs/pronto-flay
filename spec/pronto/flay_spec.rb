@@ -1,23 +1,22 @@
 require 'spec_helper'
-require 'grit-ext'
+require 'ostruct'
 
 module Pronto
   describe Flay do
     let(:flay) { Flay.new }
 
     describe '#run' do
-      subject { flay.run(diffs) }
+      subject { flay.run(patches) }
 
-      context 'diffs are nil' do
-        let(:diffs) { nil }
+      context 'patches are nil' do
+        let(:patches) { nil }
         it { should == [] }
       end
 
-      context 'no diffs' do
-        let(:diffs) { [] }
+      context 'no patches' do
+        let(:patches) { [] }
         it { should == [] }
       end
-
     end
   end
 end

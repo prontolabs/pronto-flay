@@ -7,8 +7,8 @@ module Pronto
       @flay = ::Flay.new
     end
 
-    def run(diffs)
-      return [] unless diffs
+    def run(patches)
+      return [] unless patches
 
       files = diffs.select { |diff| diff.added.any? }
                    .select { |diff| File.extname(diff.b_path) == '.rb' }
