@@ -4,7 +4,7 @@ require 'flay'
 module Pronto
   class Flay < Runner
     def initialize
-      @flay = ::Flay.new(::Flay.parse_options)
+      @flay = ::Flay.new
     end
 
     def run(diffs)
