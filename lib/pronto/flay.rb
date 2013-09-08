@@ -44,8 +44,7 @@ module Pronto
 
     def new_message(line, node)
       hash = node.structural_hash
-      patch = line.hunk.owner
-      Message.new(patch.delta.new_file[:path], line, level(hash), message(hash))
+      Message.new(line.patch.delta.new_file[:path], line, level(hash), message(hash))
     end
 
     def level(hash)
