@@ -18,5 +18,22 @@ module Pronto
         it { should == [] }
       end
     end
+
+    describe '#level' do
+      subject { flay.level(hash) }
+      before { ::Flay.any_instance.should_receive(:identical)
+                                  .and_return({hash => identical}) }
+      let(:hash) { 'test' }
+
+      context 'identical' do
+        let(:identical) { true }
+        it { should == :error }
+      end
+
+      context 'not identical' do
+        let(:identical) { false }
+        it { should == :warning }
+      end
+    end
   end
 end

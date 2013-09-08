@@ -36,11 +36,8 @@ module Pronto
         line = patch.added_lines.select do |added_line|
           added_line.new_lineno == nodes.first.line
         end.first
-        next unless line
-        same = @flay.identical[hash]
-        level = same ? :error : :warning
-        message = 'temp'
-        Pronto::Message.new(path, line, level, message)
+
+        new_message(patch, line, hash) if line
       end
     end
 
@@ -48,6 +45,16 @@ module Pronto
       ruby_patches.select do |patch|
         patch.new_file_full_path.to_s == node.file.path
       end.first
+    end
+
+    def new_message(patch, line, hash)
+      message = 'temp'
+      Message.new(patch.delta.new_file[:path], line, level(hash), message)
+    end
+
+    def level(hash)
+      same = @flay.identical[hash]
+      same ? :error : :warning
     end
   end
 end
