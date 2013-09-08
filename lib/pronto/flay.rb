@@ -12,7 +12,7 @@ module Pronto
 
       ruby_patches = patches.select do |patch|
         path = patch.delta.new_file_full_path
-        patch.additions > 0 && File.extname(path) == '.rb'
+        patch.additions > 0 && ruby_file?(path)
       end
 
       files = ruby_patches.map do |patch|
