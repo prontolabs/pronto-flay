@@ -10,14 +10,10 @@ module Pronto
     def run(patches)
       return [] unless patches
 
-      ruby_patches = patches.select do |patch|
-        path = patch.delta.new_file_full_path
-        patch.additions > 0 && ruby_file?(path)
-      end
+      ruby_patches = patches.select { |patch| patch.additions > 0 }
+                            .select { |patch| ruby_file?(patch.new_file_full_path) }
 
-      files = ruby_patches.map do |patch|
-        File.new(patch.delta.new_file_full_path)
-      end
+      files = ruby_patches.map { |patch| File.new(patch.new_file_full_path) }
 
       if files.any?
         @flay.process(*files)
@@ -49,12 +45,8 @@ module Pronto
     end
 
     def patch_for_node(ruby_patches, node)
-      repo = ruby_patches.first.delta.repo
-      repo_path = Pathname.new(repo.path).parent
-      path = Pathname.new(node.file.path).relative_path_from(repo_path)
-
       ruby_patches.select do |patch|
-        patch.delta.new_file[:path] == path.to_s
+        patch.new_file_full_path.to_s == node.file.path
       end.first
     end
   end
