@@ -18,27 +18,21 @@ module Pronto
       if files.any?
         @flay.process(*files)
         @flay.analyze
-        masses = Array(@flay.masses)
-
-        messages_from(masses, ruby_patches)
+        messages_for(ruby_patches)
       else
         []
       end
     end
 
-    def messages_from(masses, ruby_patches)
-      masses.map do |mass|
-        hash = mass.first
+    def messages_for(ruby_patches)
+      nodes.map do |node|
+        patch = patch_for_node(ruby_patches, node)
 
-        nodes(hash).map do |node|
-          patch = patch_for_node(ruby_patches, node)
+        line = patch.added_lines.select do |added_line|
+          added_line.new_lineno == node.line
+        end.first
 
-          line = patch.added_lines.select do |added_line|
-            added_line.new_lineno == node.line
-          end.first
-
-          new_message(line, node) if line
-        end
+        new_message(line, node) if line
       end.flatten.compact
     end
 
@@ -50,7 +44,7 @@ module Pronto
 
     def new_message(line, node)
       hash = node.structural_hash
-      patch = line.owner.owner
+      patch = line.hunk.owner
       Message.new(patch.delta.new_file[:path], line, level(hash), message(hash))
     end
 
@@ -64,15 +58,27 @@ module Pronto
 
     def message(hash)
       match = same?(hash) ? 'Identical' : 'Similar'
-      location = nodes(hash).map do |node|
+      location = nodes_for(hash).map do |node|
         "#{File.basename(node.file.path)}:#{node.line}"
       end
 
       "#{match} code found in #{location.join(', ')}"
     end
 
-    def nodes(hash)
+    def nodes_for(hash)
       @flay.hashes[hash]
+    end
+
+    def nodes
+      result = []
+      masses.each do |mass|
+        nodes_for(mass.first).each { |node| result << node }
+      end
+      result
+    end
+
+    def masses
+      Array(@flay.masses)
     end
   end
 end
