@@ -28,18 +28,18 @@ module Pronto
       nodes.map do |node|
         patch = patch_for_node(ruby_patches, node)
 
-        line = patch.added_lines.select do |added_line|
+        line = patch.added_lines.find do |added_line|
           added_line.new_lineno == node.line
-        end.first
+        end
 
         new_message(line, node) if line
       end.flatten.compact
     end
 
     def patch_for_node(ruby_patches, node)
-      ruby_patches.select do |patch|
+      ruby_patches.find do |patch|
         patch.new_file_full_path.to_s == node.file.path
-      end.first
+      end
     end
 
     def new_message(line, node)
