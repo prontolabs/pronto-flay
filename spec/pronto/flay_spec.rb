@@ -6,7 +6,7 @@ module Pronto
     let(:flay) { Flay.new }
 
     describe '#run' do
-      subject { flay.run(patches) }
+      subject { flay.run(patches, nil) }
 
       context 'patches are nil' do
         let(:patches) { nil }

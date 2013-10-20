@@ -7,7 +7,7 @@ module Pronto
       @flay = ::Flay.new
     end
 
-    def run(patches)
+    def run(patches, _)
       return [] unless patches
 
       ruby_patches = patches.select { |patch| patch.additions > 0 }
