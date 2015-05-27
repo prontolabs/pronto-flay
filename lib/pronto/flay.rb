@@ -13,7 +13,7 @@ module Pronto
       ruby_patches = patches.select { |patch| patch.additions > 0 }
         .select { |patch| ruby_file?(patch.new_file_full_path) }
 
-      files = ruby_patches.map { |patch| File.new(patch.new_file_full_path) }
+      files = ruby_patches.map(&:new_file_full_path)
 
       if files.any?
         @flay.process(*files)
@@ -38,7 +38,7 @@ module Pronto
 
     def patch_for_node(ruby_patches, node)
       ruby_patches.find do |patch|
-        patch.new_file_full_path.to_s == node.file.path
+        patch.new_file_full_path == node.file
       end
     end
 
@@ -59,7 +59,7 @@ module Pronto
     def message(hash)
       match = same?(hash) ? 'Identical' : 'Similar'
       location = nodes_for(hash).map do |node|
-        "#{File.basename(node.file.path)}:#{node.line}"
+        "#{File.basename(node.file)}:#{node.line}"
       end
 
       "#{match} code found in #{location.join(', ')}"
