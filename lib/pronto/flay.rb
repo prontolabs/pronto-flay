@@ -13,7 +13,7 @@ module Pronto
       ruby_patches = patches.select { |patch| patch.additions > 0 }
                             .select { |patch| ruby_file?(patch.new_file_full_path) }
 
-      files = ruby_patches.map(&:new_file_full_path)
+      files = ruby_patches.map { |patch| File.new(patch.new_file_full_path) }
 
       if files.any?
         @flay.process(*files)
