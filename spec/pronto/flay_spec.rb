@@ -21,8 +21,10 @@ module Pronto
 
     describe '#level' do
       subject { flay.level(hash) }
-      before { ::Flay.any_instance.should_receive(:identical)
-                                  .and_return({hash => identical}) }
+      before do
+        ::Flay.any_instance.should_receive(:identical)
+          .and_return(hash => identical)
+      end
       let(:hash) { 'test' }
 
       context 'identical' do

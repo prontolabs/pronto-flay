@@ -11,7 +11,7 @@ module Pronto
       return [] unless patches
 
       ruby_patches = patches.select { |patch| patch.additions > 0 }
-                            .select { |patch| ruby_file?(patch.new_file_full_path) }
+        .select { |patch| ruby_file?(patch.new_file_full_path) }
 
       files = ruby_patches.map { |patch| File.new(patch.new_file_full_path) }
 
@@ -43,8 +43,9 @@ module Pronto
     end
 
     def new_message(line, node)
+      path = line.patch.delta.new_file[:path]
       hash = node.structural_hash
-      Message.new(line.patch.delta.new_file[:path], line, level(hash), message(hash))
+      Message.new(path, line, level(hash), message(hash))
     end
 
     def level(hash)
