@@ -1,0 +1,2 @@
+0000000000000000000000000000000000000000 b27177ef4518b84235678496363e0ba0999b04b5 Mindaugas Mozūras <mindaugas.mozuras@gmail.com> 1433011189 +0300	commit (initial): Initial commit
+b27177ef4518b84235678496363e0ba0999b04b5 eeade9a73c47bc2f6724eb90d5e6ec58d9e60675 Mindaugas Mozūras <mindaugas.mozuras@gmail.com> 1433011395 +0300	commit: Add checks for nil/empty to say method
