@@ -14,6 +14,7 @@ module Pronto
         .select { |patch| ruby_file?(patch.new_file_full_path) }
 
       files = ruby_patches.map(&:new_file_full_path)
+      files = ::Flay.filter_files(files)
 
       if files.any?
         @flay.process(*files)

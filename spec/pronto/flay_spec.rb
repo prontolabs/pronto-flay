@@ -27,6 +27,16 @@ module Pronto
         its(:'first.msg') do
           should == 'Similar code found in hello.rb:6, hello.rb:12'
         end
+
+        context 'with ignored files' do
+          before do
+           ::Flay.should_receive(:filter_files) do |files|
+              files.reject { |file| file.to_s.end_with?('/hello.rb') }
+            end
+          end
+
+          its(:count) { should == 0 }
+        end
       end
     end
 
