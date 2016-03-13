@@ -3,13 +3,13 @@ require 'ostruct'
 
 module Pronto
   describe Flay do
-    let(:flay) { Flay.new }
+    let(:flay) { Flay.new(patches) }
+    let(:patches) { nil }
 
     describe '#run' do
-      subject { flay.run(patches, nil) }
+      subject { flay.run }
 
       context 'patches are nil' do
-        let(:patches) { nil }
         it { should == [] }
       end
 

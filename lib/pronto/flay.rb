@@ -3,31 +3,26 @@ require 'flay'
 
 module Pronto
   class Flay < Runner
-    def initialize
-      @flay = ::Flay.new
-    end
-
-    def run(patches, _)
-      return [] unless patches
-
-      ruby_patches = patches.select { |patch| patch.additions > 0 }
-        .select { |patch| ruby_file?(patch.new_file_full_path) }
-
+    def run
       files = ruby_patches.map(&:new_file_full_path)
       files = ::Flay.filter_files(files)
 
       if files.any?
-        @flay.process(*files)
-        @flay.analyze
-        messages_for(ruby_patches)
+        flay.process(*files)
+        flay.analyze
+        messages
       else
         []
       end
     end
 
-    def messages_for(ruby_patches)
+    def flay
+      @flay ||= ::Flay.new
+    end
+
+    def messages
       nodes.map do |node|
-        patch = patch_for_node(ruby_patches, node)
+        patch = patch_for_node(node)
 
         line = patch.added_lines.find do |added_line|
           added_line.new_lineno == node.line
@@ -37,7 +32,7 @@ module Pronto
       end.flatten.compact
     end
 
-    def patch_for_node(ruby_patches, node)
+    def patch_for_node(node)
       ruby_patches.find do |patch|
         patch.new_file_full_path == node.file
       end
@@ -46,7 +41,7 @@ module Pronto
     def new_message(line, node)
       path = line.patch.delta.new_file[:path]
       hash = node.structural_hash
-      Message.new(path, line, level(hash), message(hash))
+      Message.new(path, line, level(hash), message(hash), nil, self.class)
     end
 
     def level(hash)
@@ -54,7 +49,7 @@ module Pronto
     end
 
     def same?(hash)
-      @flay.identical[hash]
+      flay.identical[hash]
     end
 
     def message(hash)
