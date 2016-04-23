@@ -58,23 +58,23 @@ module Pronto
         "#{File.basename(node.file)}:#{node.line}"
       end
 
-      "#{match} code found in #{location.join(', ')}"
+      "#{match} code found in #{location.join(', ')} (mass = #{masses[hash]})"
     end
 
     def nodes_for(hash)
-      @flay.hashes[hash]
+      flay.hashes[hash]
     end
 
     def nodes
       result = []
-      masses.each do |mass|
-        nodes_for(mass.first).each { |node| result << node }
+      masses.keys.each do |hash|
+        nodes_for(hash).each { |node| result << node }
       end
       result
     end
 
     def masses
-      Array(@flay.masses)
+      flay.masses
     end
   end
 end

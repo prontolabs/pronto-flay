@@ -25,7 +25,7 @@ module Pronto
 
         its(:count) { should == 1 }
         its(:'first.msg') do
-          should == 'Similar code found in hello.rb:6, hello.rb:12'
+          should == 'Similar code found in hello.rb:6, hello.rb:12 (mass = 32)'
         end
 
         context 'with ignored files' do
