@@ -30,9 +30,8 @@ module Pronto
 
         context 'with ignored files' do
           before do
-            ::Flay.should_receive(:filter_files) do |files|
-              files.reject { |file| file.to_s.end_with?('/hello.rb') }
-            end
+            ::Flay.send(:remove_const, :DEFAULT_IGNORE)
+            ::Flay::DEFAULT_IGNORE = 'spec/fixtures/test.git/.flayignore'
           end
 
           its(:count) { should == 0 }
