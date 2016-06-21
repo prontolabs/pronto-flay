@@ -3,18 +3,8 @@ require 'flay'
 
 module Pronto
   class Flay < Runner
-    # Pronto::Flay#run sets flay
-    attr_writer :flay
-
     def run
-      files = ruby_patches.map(&:new_file_full_path)
-
       if files.any?
-        # The current Flay (2.8.0) takes care of filtering
-        # files by looking at .flayignore.
-        # Saving the returned Flay object at @flay so we
-        # can inspect it and build the messages Array.
-        self.flay = ::Flay.run(files)
         flay.analyze
         messages
       else
@@ -22,10 +12,19 @@ module Pronto
       end
     end
 
-    # If we haven't Pronto::Flay#run yet,
-    # return an empty Flay object.
+    # The current Flay (2.8.0) takes care of filtering
+    # files by looking at .flayignore.
+    # Saving the returned Flay object at @flay so we
+    # can inspect it and build the messages Array.
+    #
+    # Coercing files with Array to protect against
+    # +nil+ values.
     def flay
-      @flay ||= ::Flay.new
+      @flay ||= ::Flay.run(Array(files))
+    end
+
+    def files
+      @files ||= ruby_patches.map(&:new_file_full_path)
     end
 
     def messages
