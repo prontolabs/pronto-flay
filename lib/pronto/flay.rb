@@ -4,11 +4,7 @@ require 'flay'
 module Pronto
   class Flay < Runner
     def run
-      files = ruby_patches.map(&:new_file_full_path)
-      files = ::Flay.filter_files(files)
-
       if files.any?
-        flay.process(*files)
         flay.analyze
         messages
       else
@@ -16,8 +12,19 @@ module Pronto
       end
     end
 
+    # The current Flay (2.8.0) takes care of filtering
+    # files by looking at .flayignore.
+    # Saving the returned Flay object at @flay so we
+    # can inspect it and build the messages Array.
+    #
+    # Coercing files with Array to protect against
+    # +nil+ values.
     def flay
-      @flay ||= ::Flay.new
+      @flay ||= ::Flay.run(Array(files))
+    end
+
+    def files
+      @files ||= ruby_patches.map(&:new_file_full_path)
     end
 
     def messages
