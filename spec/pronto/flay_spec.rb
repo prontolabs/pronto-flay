@@ -31,7 +31,7 @@ module Pronto
         context 'with ignored files' do
           before do
             ::Flay.send(:remove_const, :DEFAULT_IGNORE)
-            ::Flay::DEFAULT_IGNORE = 'spec/fixtures/test.git/.flayignore'
+            ::Flay::DEFAULT_IGNORE = 'spec/fixtures/test.git/.flayignore'.freeze
           end
 
           its(:count) { should == 0 }
