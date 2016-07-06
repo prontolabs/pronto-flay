@@ -16,11 +16,8 @@ module Pronto
     # files by looking at .flayignore.
     # Saving the returned Flay object at @flay so we
     # can inspect it and build the messages Array.
-    #
-    # Coercing files with Array to protect against
-    # +nil+ values.
     def flay
-      @flay ||= ::Flay.run(Array(files))
+      @flay ||= ::Flay.run(files)
     end
 
     def files
