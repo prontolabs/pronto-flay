@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.author = 'Mindaugas Mozūras'
   s.email = 'mindaugas.mozuras@gmail.com'
-  s.homepage = 'http://github.org/mmozuras/pronto-flay'
+  s.homepage = 'http://github.com/mmozuras/pronto-flay'
   s.summary = 'Pronto runner for Flay, structural similarities analyzer'
 
   s.licenses = ['MIT']
