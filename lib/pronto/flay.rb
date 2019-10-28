@@ -27,6 +27,7 @@ module Pronto
     def messages
       nodes.map do |node|
         patch = patch_for_node(node)
+        return unless patch
 
         line = patch.added_lines.find do |added_line|
           added_line.new_lineno == node.line
