@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'rspec'
 require 'rspec/its'
 require 'pronto/flay'
