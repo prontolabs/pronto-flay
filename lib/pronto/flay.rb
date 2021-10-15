@@ -21,7 +21,7 @@ module Pronto
     end
 
     def params
-      ENV['PRONTO_FLAY_MASS_THRESHOLD'] ? [*files, '-m', ENV['PRONTO_FLAY_MASS_THRESHOLD']] : files
+      [*files, '-m', mass_threshold]
     end
 
     def files
@@ -84,5 +84,10 @@ module Pronto
     def masses
       flay.masses
     end
+
+    def mass_threshold
+      @mass_threshold ||= ENV['PRONTO_FLAY_MASS_THRESHOLD'] || Pronto::ConfigFile.new.to_h.dig('flay', 'mass_threshold') || ::Flay.default_options[:mass].to_s
+    end
+
   end
 end
