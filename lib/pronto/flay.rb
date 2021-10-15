@@ -17,7 +17,11 @@ module Pronto
     # Saving the returned Flay object at @flay so we
     # can inspect it and build the messages Array.
     def flay
-      @flay ||= ::Flay.run(files)
+      @flay ||= ::Flay.run(params)
+    end
+
+    def params
+      [*files, '-m', mass_threshold]
     end
 
     def files
@@ -80,5 +84,10 @@ module Pronto
     def masses
       flay.masses
     end
+
+    def mass_threshold
+      @mass_threshold ||= ENV['PRONTO_FLAY_MASS_THRESHOLD'] || Pronto::ConfigFile.new.to_h.dig('flay', 'mass_threshold') || ::Flay.default_options[:mass].to_s
+    end
+
   end
 end
