@@ -13,6 +13,6 @@ RSpec.shared_context 'test repo' do
 end
 
 RSpec.configure do |config|
-  config.expect_with(:rspec) { |c| c.syntax = :should }
-  config.mock_with(:rspec) { |c| c.syntax = :should }
+  config.expect_with(:rspec) { |c| c.syntax = %i[expect should] }
+  config.mock_with(:rspec) { |c| c.syntax = %i[expect should] }
 end
