@@ -3,6 +3,11 @@ require 'flay'
 
 module Pronto
   class Flay < Runner
+    DEFAULT_SEVERITY_LEVELS = {
+      identical: :error,
+      similar: :warning,
+    }.freeze
+
     def run
       if files.any?
         flay.analyze
@@ -53,11 +58,21 @@ module Pronto
     end
 
     def level(hash)
-      same?(hash) ? :error : :warning
+      same?(hash) ? severity_levels_config[:identical] : severity_levels_config[:similar]
     end
 
     def same?(hash)
       flay.identical[hash]
+    end
+
+    def severity_levels_config
+      @severity_levels_config ||= DEFAULT_SEVERITY_LEVELS.merge(custom_severity_levels_config)
+        .map { |k, v| [k.to_sym, v.to_sym] }
+        .to_h
+    end
+
+    def custom_severity_levels_config
+      Pronto::ConfigFile.new.to_h.dig('flay', 'severity_levels') || {}
     end
 
     def message(hash)
