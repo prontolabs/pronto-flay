@@ -5,6 +5,14 @@ module Pronto
   describe Flay do
     let(:flay) { Flay.new(patches) }
     let(:patches) { nil }
+    let(:pronto_config) do
+      instance_double Pronto::ConfigFile, to_h: config_hash
+    end
+    let(:config_hash) { {} }
+
+    before do
+      allow(Pronto::ConfigFile).to receive(:new).and_return(pronto_config)
+    end
 
     describe '#run' do
       subject { flay.run }
@@ -55,6 +63,22 @@ module Pronto
       context 'not identical' do
         let(:identical) { false }
         it { should == :warning }
+      end
+
+      context 'when custom configuration provided' do
+        let(:config_hash) { { 'flay' => { 'severity_levels' => levels_configuration } } }
+
+        context 'identical' do
+          let(:identical) { true }
+          let(:levels_configuration) { { 'identical' => 'warning' } }
+          it { should == :warning }
+        end
+
+        context 'not identical' do
+          let(:identical) { true }
+          let(:levels_configuration) { { 'similar' => 'error' } }
+          it { should == :error }
+        end
       end
     end
   end

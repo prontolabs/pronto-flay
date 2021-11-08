@@ -12,3 +12,11 @@ Pronto runner for [Flay](https://github.com/seattlerb/flay), structural similari
 Configuring excludes Using [.flayignore](https://github.com/seattlerb/flay/blob/92039b66a479f3b8a8a1204c5733e35463e66995/README.txt#L28) will work just fine with pronto-flay.
 
 You can overwrite the default, very low mass threshold for Flay with the PRONTO_FLAY_MASS_THRESHOLD environment variable for a more sensible approach.
+
+Severity levels for identical and similar code issues can be configured inside `.pronto.yml`:
+```yaml
+flay:
+  severity_levels:
+    identical: 'warning'
+    similar: 'warning'
+```
