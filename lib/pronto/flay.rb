@@ -47,7 +47,7 @@ module Pronto
 
     def patch_for_node(node)
       ruby_patches.find do |patch|
-        patch.new_file_full_path == node.file
+        patch.new_file_full_path.to_s == node.file.to_s
       end
     end
 
