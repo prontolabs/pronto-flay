@@ -1,4 +1,5 @@
 pkg/*
+vendor/*
 *.gem
 .bundle
 .DS_Store

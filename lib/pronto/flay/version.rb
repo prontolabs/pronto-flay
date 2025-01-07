@@ -1,5 +1,5 @@
 module Pronto
   module FlayVersion
-    VERSION = '0.11.1'.freeze
+    VERSION = '0.12.0'.freeze
   end
 end

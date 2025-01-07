@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency('pronto', '~> 0.11.0')
   s.add_dependency('flay', '~> 2.8')
+  s.add_development_dependency('base64', '~> 0.2.0')
   s.add_development_dependency('rake', '~> 12.0')
   s.add_development_dependency('rspec', '~> 3.4')
   s.add_development_dependency('rspec-its', '~> 1.2')
