@@ -1,9 +1,8 @@
 # Pronto runner for Flay
 
-[![Code Climate](https://codeclimate.com/github/prontolabs/pronto-flay.png)](https://codeclimate.com/github/prontolabs/pronto-flay)
-[![Build Status](https://travis-ci.org/prontolabs/pronto-flay.png)](https://travis-ci.org/prontolabs/pronto-flay)
 [![Gem Version](https://badge.fury.io/rb/pronto-flay.png)](http://badge.fury.io/rb/pronto-flay)
-[![Dependency Status](https://gemnasium.com/prontolabs/pronto-flay.png)](https://gemnasium.com/prontolabs/pronto-flay)
+[![Build Status](https://github.com/prontolabs/pronto-flay/actions/workflows/checks.yml/badge.svg)](https://github.com/prontolabs/pronto-flay/actions/workflows/checks.yml)
+[![Code Climate](https://codeclimate.com/github/prontolabs/pronto-flay.png)](https://codeclimate.com/github/prontolabs/pronto-flay)
 
 Pronto runner for [Flay](https://github.com/seattlerb/flay), structural similarities analyzer. [What is Pronto?](https://github.com/prontolabs/pronto)
 
